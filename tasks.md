@@ -2,10 +2,15 @@ Do as many tasks as possible from the following list
 
 
 # Fullstack (frontend + backend)
-* Get the app to run on your local machine
-* There are bugs - find and fix them
+* Get the app to run on your local machine  
+--> done, Debugging set up
+* There are bugs - find and fix them  
+--> bug in host and port declaration for frontend to allow CORS in property file (removed underscores)
+--> Endless loop in frontend result.tsx: Added useEffect Statement to API-Call
 * To display better ads we need more data - extend the form with more inputs and store the data in the database
+--> Added favourite Animal und Zodiac Sign to provide targeted ads
 * At the moment anyone can use our app - implement authentication with a registration process
+--> backend done, 
 * Filling in the same data over and over again is annoying - prefill some of the form from the login data
 * Who wrote that code? - Improve the code quality
 
@@ -15,8 +20,10 @@ Do as many tasks as possible from the following list
 * Navigation is bad - add a back to start link on all pages
 * Why can I enter my name in the phone input? - Restrict the input to only allow E.164 phone numbers
 * The text "Game" might not be a game - create a game the user has to win to get to the price
-* We need to proudly present our company - add a header banner with our company logo and a link to our website
-* Who implemented that ugly UI? - make it beautiful
+* We need to proudly present our company - add a header banner with our company logo and a link to our website  
+--> Done
+* Who implemented that ugly UI? - make it beautiful  
+--> Added Footer
 
 
 # Backend

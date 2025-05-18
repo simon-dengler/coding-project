@@ -1,7 +1,4 @@
-import Container from '@mui/material/Container';
-import {Button, TextField} from "@mui/material";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import {Button, TextField, Container, Typography, Box} from "@mui/material";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import baseApi from "../api/baseApi";
@@ -12,6 +9,8 @@ interface FormData {
     lastName: string;
     email: string;
     phone: string;
+    favouriteAnimal: string;
+    zodiac: string;
 }
 
 export interface ErrorData {
@@ -58,7 +57,7 @@ function Form() {
                     Personal data
                 </Typography>
                 <Typography>
-                    Enter your personal datas so we know how to reach you
+                    Enter your personal datas so we know how to reach you.  
                 </Typography>
             </Box>
             <Box component="form"
@@ -90,6 +89,16 @@ function Form() {
                 <TextField label="Phone"
                            name="phone"
                            value={formData.phone ?? ""}
+                           onChange={handleTextChange}
+                />
+                <TextField label="Favourite Animal"
+                           name="favouriteAnimal"
+                           value={formData.favouriteAnimal ?? ""}
+                           onChange={handleTextChange}
+                />
+                <TextField label="Zodiac Sign"
+                           name="zodiac"
+                           value={formData.zodiac ?? ""}
                            onChange={handleTextChange}
                 />
 

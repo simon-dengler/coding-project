@@ -25,6 +25,8 @@ public class FormData {
     private String lastName;
     private String email;
     private String phone;
+    private String favouriteAnimal;
+    private String zodiac;
 
     @Override
     public boolean equals(Object o) {

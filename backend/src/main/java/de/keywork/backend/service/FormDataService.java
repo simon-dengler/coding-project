@@ -34,6 +34,8 @@ public class FormDataService {
         formData.setLastName(dto.getLastName());
         formData.setEmail(dto.getEmail());
         formData.setPhone(dto.getPhone());
+        formData.setFavouriteAnimal(dto.getFavouriteAnimal());
+        formData.setZodiac(dto.getZodiac());
         formData = formDataRepository.save(formData);
         return formData.getId();
     }
@@ -46,6 +48,8 @@ public class FormDataService {
         dto.setFirstName(formData.getFirstName());
         dto.setLastName(formData.getLastName());
         dto.setPhone(formData.getPhone());
+        dto.setFavouriteAnimal(formData.getFavouriteAnimal());
+        dto.setZodiac(formData.getZodiac());
         dto.setId(formData.getId());
 
         return dto;

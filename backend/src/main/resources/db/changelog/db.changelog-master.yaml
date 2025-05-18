@@ -9,3 +9,23 @@ databaseChangeLog:
             path: db/changelog/data/001-schema.sql
             splitStatements: true
             stripComments: true
+   - changeSet:
+        id: 2
+        author: Simon-Dengler
+        changes:
+           - sqlFile:
+                dbms: mysql, mariadb
+                encoding: utf8
+                path: db/changelog/data/002-schema.sql
+                splitStatements: true
+                stripComments: true
+   - changeSet:
+       id: 3
+       author: Simon-Dengler
+       changes:
+         - sqlFile:
+             dbms: mysql, mariadb
+             encoding: utf8
+             path: db/changelog/data/003-schema.sql
+             splitStatements: true
+             stripComments: true

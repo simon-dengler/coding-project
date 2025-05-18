@@ -9,4 +9,6 @@ public class FormDataDto {
     private String lastName;
     private String email;
     private String phone;
+    private String favouriteAnimal;
+    private String zodiac;
 }

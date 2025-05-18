@@ -1,22 +1,8 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import {Button} from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            Copyright ©
-            <Link color="inherit" href="https://www.key-work.de/team-anwendungsentwicklung/">
-                Key-Work
-            </Link>&nbsp;
-            {new Date().getFullYear()}
-            .
-        </Typography>
-    );
-}
 
 export default function App() {
     return (
@@ -26,7 +12,7 @@ export default function App() {
                    Lottery
                 </Typography>
                 <Typography>
-                    Win a price by submitting your personal data and beating a simple game
+                    Win a price by submitting your personal data and beating a simple game.
                 </Typography>
             </Box>
             <Box sx={{display: "flex", flexDirection: "row-reverse", mb: 5}}>
@@ -34,7 +20,6 @@ export default function App() {
                     start
                 </Button>
             </Box>
-            <Copyright/>
         </Container>
     );
 }
