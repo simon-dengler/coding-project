@@ -7,11 +7,12 @@ Do as many tasks as possible from the following list
 * There are bugs - find and fix them  
 --> bug in host and port declaration for frontend to allow CORS in property file (removed underscores)
 --> Endless loop in frontend result.tsx: Added useEffect Statement to API-Call
-* To display better ads we need more data - extend the form with more inputs and store the data in the database
+* To display better ads we need more data - extend the form with more inputs and store the data in the database  
 --> Added favourite Animal und Zodiac Sign to provide targeted ads
-* At the moment anyone can use our app - implement authentication with a registration process
---> backend done, 
-* Filling in the same data over and over again is annoying - prefill some of the form from the login data
+* At the moment anyone can use our app - implement authentication with a registration process  
+--> backend done, frontend done.
+* Filling in the same data over and over again is annoying - prefill some of the form from the login data  
+--> 
 * Who wrote that code? - Improve the code quality
 
 

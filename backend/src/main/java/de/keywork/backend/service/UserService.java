@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
         if(userDto.getId() != null) {
             user = requireById(userDto.getId());
         } else {
-                user = new User();
+            user = new User();
         }
         if (ObjectUtils.isEmpty(userDto.getUsername())
             || ObjectUtils.isEmpty(userDto.getPassword())) {

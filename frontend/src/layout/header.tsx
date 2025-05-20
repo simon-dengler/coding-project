@@ -63,7 +63,7 @@ function Header() {
                     </Box>
                     <Box sx={navbarEndStyle}>
                         <Box>
-                        <Link component={RouterLink} to="/check" sx={{mt: 1, mr: 1, height: 4}}>
+                        <Link component={RouterLink} to="/account" sx={{mt: 1, mr: 1, height: 4}}>
                             <AccountCircleOutlinedIcon 
                                 sx={accountIconStyle}    
                             />

@@ -1,11 +1,13 @@
 import { Button, TextField, Container, Typography, Box } from "@mui/material";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import baseApi from "../api/baseApi";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
-export default function UsernameCheck() {
+export default function Check() {
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const fromBefore = location.state?.from?.pathname || "/";
 
     const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
@@ -13,25 +15,26 @@ export default function UsernameCheck() {
 
     const handleSubmitFormData = (event: FormEvent<HTMLElement>) => {
             event.preventDefault();
-            baseApi.postData("check", {username: username}).then(exists => {
-                if (exists){
-                    navigate("/login/" + username);
+            baseApi.postData("auth/check", {username: username})
+            .then(body => {
+                const response = body as {exists: boolean};
+                if (response.exists==true){
+                    navigate("/login/" + username, {
+                        state: {from:fromBefore}
+                    });
                 } else {
-                    navigate("/register/" + username);
+                    navigate("/register/" + username, {
+                        state: {from:fromBefore}
+                    });
                 }
             });
         };
-
-    const createNewUser = (event: FormEvent<HTMLElement>) => {
-        event.preventDefault();
-        navigate("/register/" + username);
-    };
 
     return (
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
                 <Typography variant="h4" component="h1" gutterBottom>
-                    Enter username
+                    Log In / Sign up
                 </Typography>
                 <Typography>
                     Please enter your username.
@@ -53,8 +56,8 @@ export default function UsernameCheck() {
                 />
 
                 <Box sx={{ float: "right" }}>
-                    <Button type="button" onClick={createNewUser} sx={{ mr: 1 }}>
-                        Create New
+                    <Button type="button" onClick={()=>{navigate("/");}} sx={{mr: 1}}>
+                        Cancel
                     </Button>
                     <Button type="submit" variant="contained">
                         Submit

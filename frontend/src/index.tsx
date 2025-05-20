@@ -7,8 +7,12 @@ import Layout from "./layout/layout";
 import Form from "./form/form";
 import Game from "./game/game";
 import Result from "./result/result";
-import UsernameCheck from "./account/usernameCheck";
+import Check from "./account/check";
 import {createRoot} from "react-dom/client";
+import Account from "./account/account";
+import RouteProtection from "./route-protection/routeProtection";
+import Login from './account/login';
+import Register from "./account/register";
 
 const rootElement = document.querySelector('#root');
 
@@ -20,11 +24,18 @@ if (rootElement) {
                 <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<App/>}/>
-                        <Route path="/form" element={<Form/>}/>
-                        <Route path="/form/:formId" element={<Form/>}/>
-                        <Route path="/game/:formId" element={<Game/>}/>
-                        <Route path="/result/:formId" element={<Result/>}/>
-                        <Route path="/check" element={<UsernameCheck/>}/>
+                        <Route path="/check" element={<Check/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/login/:username" element={<Login/>}/>
+                        <Route path="/register" element={<Register />}/>
+                        <Route path="/register/:username" element={<Register />}/>
+                        <Route element={<RouteProtection />}>
+                            <Route path="/form" element={<Form/>}/>
+                            <Route path="/form/:formId" element={<Form/>}/>
+                            <Route path="/game/:formId" element={<Game/>}/>
+                            <Route path="/result/:formId" element={<Result/>}/>
+                            <Route path="/account" element={<Account/>}/>
+                        </Route>
                     </Route>
                 </Routes>
             </ThemeProvider>

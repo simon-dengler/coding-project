@@ -45,7 +45,7 @@ function Form() {
     const handleSubmitFormData = (event: FormEvent<HTMLElement>) => {
         event.preventDefault();
         baseApi.postData("form", formData).then(id => {
-            navigate("/form/" + id);
+            navigate("/form/" + id); // ?? 
             navigate("/game/" + id);
         });
     };
