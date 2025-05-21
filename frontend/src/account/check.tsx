@@ -1,5 +1,5 @@
-import { Button, TextField, Container, Typography, Box } from "@mui/material";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {Button, TextField, Container, Typography, Box} from "@mui/material";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import baseApi from "../api/baseApi";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 
@@ -32,7 +32,7 @@ export default function Check() {
 
     return (
         <Container maxWidth="sm">
-            <Box sx={{ my: 4 }}>
+            <Box sx={{my: 4}}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Log In / Sign up
                 </Typography>
@@ -45,7 +45,7 @@ export default function Check() {
                 autoComplete="off"
                 onSubmit={handleSubmitFormData}
                 sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
+                    '& > :not(style)': {m: 1, width: '25ch'},
                 }}
             >
                 <TextField label="Username"
@@ -55,7 +55,7 @@ export default function Check() {
                     onChange={handleTextChange}
                 />
 
-                <Box sx={{ float: "right" }}>
+                <Box sx={{float: "right"}}>
                     <Button type="button" onClick={()=>{navigate("/");}} sx={{mr: 1}}>
                         Cancel
                     </Button>

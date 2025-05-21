@@ -17,7 +17,7 @@ export default function Register() {
     const from = location.state?.from?.pathname || "/";
 
     const validatePassword = (password: string) => {
-        if(password.length < 6){
+        if (password.length < 6) {
             return "At least 6 Characters.";
         }
         return "";
@@ -26,7 +26,7 @@ export default function Register() {
     const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         const name = event.target.name;
-        if(name === "password"){
+        if (name === "password") {
             setPasswordErrorMessage(validatePassword(value));
         }
         setFormData(prev => ({
@@ -37,18 +37,18 @@ export default function Register() {
 
     const handleSubmitFormData = (event: FormEvent<HTMLElement>) => {
         event.preventDefault();
-        if(formData.password === formData.repeatPassword
+        if (formData.password === formData.repeatPassword
             && username
-        ){
+        ) {
             const dto = {username: username, password: formData.password};
             baseApi.postData("auth/register", dto)
                 .then(body => {
-                    const response = body as {token: string};
+                    const response = body as { token: string };
                     localStorage.setItem("jwt", response.token);
                     localStorage.setItem("username", username);
-                    navigate(from, { replace: true });
+                    navigate(from, {replace: true});
                 })
-                .catch(() =>{
+                .catch(() => {
                     alert("Something went wrong. Please try again.");
                 });
         } else {
@@ -63,16 +63,16 @@ export default function Register() {
                     Sign Up
                 </Typography>
                 <Typography>
-                    Please choose your password, {username}. 
+                    Please choose your password, {username}.
                 </Typography>
             </Box>
             <Box component="form"
-                 noValidate
-                 autoComplete="off"
-                 onSubmit={handleSubmitFormData}
-                 sx={{
-                     '& > :not(style)': {m: 1, width: '25ch'},
-                 }}>
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmitFormData}
+                sx={{
+                    '& > :not(style)': {m: 1, width: '25ch'}
+                }}>
                 <div>
                     <TextField label="Password"
                         name="password"
@@ -92,9 +92,9 @@ export default function Register() {
                         required
                         onChange={handleTextChange}
                     />
-                </div>       
+                </div>
                 <Box sx={{float: "right"}}>
-                    <Button type="button" onClick={()=>{navigate("/");}} sx={{mr: 1}}>
+                    <Button type="button" onClick={() => { navigate("/"); }} sx={{mr: 1}}>
                         Cancel
                     </Button>
                     <Button type="submit" variant="contained">

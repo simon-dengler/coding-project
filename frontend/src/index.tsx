@@ -28,7 +28,7 @@ if (rootElement) {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/login/:username" element={<Login/>}/>
                         <Route path="/register" element={<Register />}/>
-                        <Route path="/register/:username" element={<Register />}/>
+                        <Route path="/register/:username" element={<Register/>}/>
                         <Route element={<RouteProtection />}>
                             <Route path="/form" element={<Form/>}/>
                             <Route path="/form/:formId" element={<Form/>}/>

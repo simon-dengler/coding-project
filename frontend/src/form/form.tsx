@@ -2,6 +2,7 @@ import {Button, TextField, Container, Typography, Box} from "@mui/material";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import baseApi from "../api/baseApi";
+import {parsePhoneNumberFromString} from "libphonenumber-js";
 
 interface FormData {
     id: number | null;
@@ -31,10 +32,14 @@ function Form() {
     const [formIdNumber, setFormIdNumber] = useState(formId ? parseInt(formId, 10) : null);
     const navigate = useNavigate();
     const [formData, setFormData] = useState<Partial<FormData>>({id: formIdNumber});
+    const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
 
     const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         const name = event.target.name;
+        if(name === "phone"){
+            setPhoneErrorMessage(validatePhoneNumber(value));
+        }
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -52,6 +57,9 @@ function Form() {
                 if(user.formDataId){
                     setFormIdNumber(user.formDataId);
                 }
+            })
+            .catch(error => {
+                console.error(error);
             });
         }
     }, [formIdNumber]);
@@ -62,6 +70,20 @@ function Form() {
             navigate("/form/" + id); // ?? 
             navigate("/game/" + id);
         });
+    };
+
+    const validatePhoneNumber = (phoneInput: string) => {
+        const phoneNumber = parsePhoneNumberFromString(phoneInput);
+        if(phoneNumber?.isValid() && phoneNumber?.format('E.164') === phoneInput){
+            return "";
+        } else if (phoneInput.length > 15) {
+            return "max. 15 digits";
+        } else if (!phoneInput.startsWith("+")) {
+            return "please start with '+COUNTRYCODE'";
+        } else if(phoneInput.indexOf(" ") != -1) {
+            return "please remove any spaces";
+        }
+        return "Please provide an E.164 compatible number.";
     };
 
     return (
@@ -104,6 +126,8 @@ function Form() {
                            name="phone"
                            value={formData.phone ?? ""}
                            onChange={handleTextChange}
+                           error={!!phoneErrorMessage}
+                           helperText={phoneErrorMessage}
                 />
                 <TextField label="Favourite Animal"
                            name="favouriteAnimal"

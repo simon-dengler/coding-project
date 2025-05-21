@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {Navigate, Outlet, useLocation, useNavigate, } from "react-router-dom";
+import {Navigate, Outlet, useLocation, useNavigate,} from "react-router-dom";
 import baseApi from "../api/baseApi";
 
 export default function RouteProtection(){

@@ -30,7 +30,7 @@ export default function Login(){
             .then(body => {
                 const response = body as {token: string};
                 localStorage.setItem("jwt", response.token);
-                navigate(from, { replace: true });
+                navigate(from, {replace: true});
             })
             .catch(() =>{
                 alert("Something went wrong. Please try again.");
