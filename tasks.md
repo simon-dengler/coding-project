@@ -12,9 +12,9 @@ Do as many tasks as possible from the following list
 * At the moment anyone can use our app - implement authentication with a registration process  
 --> backend done, frontend done.
 * Filling in the same data over and over again is annoying - prefill some of the form from the login data  
---> 
-* Who wrote that code? - Improve the code quality
-
+--> done
+* Who wrote that code? - Improve the code quality  
+--> **TBD**
 
 # Frontend
 * The cancel button does not do anything - implement it

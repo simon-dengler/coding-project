@@ -13,6 +13,12 @@ interface FormData {
     zodiac: string;
 }
 
+interface User {
+    id: number | null,
+    username: string,
+    formDataId: number | null,
+}
+
 export interface ErrorData {
     error: string;
     status: number;
@@ -22,7 +28,7 @@ export interface ErrorData {
 
 function Form() {
     const {formId} = useParams();
-    const formIdNumber = formId ? parseInt(formId, 10) : null;
+    const [formIdNumber, setFormIdNumber] = useState(formId ? parseInt(formId, 10) : null);
     const navigate = useNavigate();
     const [formData, setFormData] = useState<Partial<FormData>>({id: formIdNumber});
 
@@ -39,6 +45,14 @@ function Form() {
         if (formIdNumber) {
             baseApi.getData("form/" + formIdNumber)
                 .then(responseData => setFormData(responseData as FormData));
+        } else {
+            baseApi.getData("account")
+            .then(responesData => {
+                const user = responesData as User;
+                if(user.formDataId){
+                    setFormIdNumber(user.formDataId);
+                }
+            });
         }
     }, [formIdNumber]);
 

@@ -1,11 +1,14 @@
 package de.keywork.backend.service;
 
 import de.keywork.backend.dto.UserDto;
+import de.keywork.backend.entity.FormData;
 import de.keywork.backend.entity.User;
+import de.keywork.backend.repository.FormDataRepository;
 import de.keywork.backend.repository.UserRepository;
 import de.keywork.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final FormDataRepository formDataRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,6 +35,17 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPasswordHash(), new ArrayList<>()
         );
+    }
+
+    public UserDto loadUserByUsername(String username, UserDto dto) {
+        User user = userRepository.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        dto.setUsername(user.getUsername());
+        dto.setId(user.getId());
+        if(user.getFormData() != null) {
+            dto.setFormDataId(user.getFormData().getId());
+        }
+        return dto;
     }
 
     public long saveUser(UserDto userDto){
@@ -53,6 +67,14 @@ public class UserService implements UserDetailsService {
         user.setPasswordHash(passwordHash);
         user = userRepository.save(user);
         return user.getId();
+    }
+
+    public long updateUser (String username, Long formDataId) throws Exception{
+        var formData = formDataRepo.findById(formDataId).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        var user = userRepository.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setFormData(formData);
+        return userRepository.save(user).getId();
     }
 
     public User requireById(long userId) {

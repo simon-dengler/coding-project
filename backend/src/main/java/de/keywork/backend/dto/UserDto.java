@@ -7,5 +7,5 @@ public class UserDto {
     private Long id;
     private String username;
     private String password;
-    private long formDataId;
+    private Long formDataId;
 }
