@@ -17,9 +17,12 @@ Do as many tasks as possible from the following list
 --> **TBD**
 
 # Frontend
-* The cancel button does not do anything - implement it
-* Navigation is bad - add a back to start link on all pages
-* Why can I enter my name in the phone input? - Restrict the input to only allow E.164 phone numbers
+* The cancel button does not do anything - implement it  
+--> done
+* Navigation is bad - add a back to start link on all pages  
+--> Home Button in Header
+* Why can I enter my name in the phone input? - Restrict the input to only allow E.164 phone numbers  
+-->
 * The text "Game" might not be a game - create a game the user has to win to get to the price
 * We need to proudly present our company - add a header banner with our company logo and a link to our website  
 --> Done

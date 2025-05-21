@@ -117,7 +117,7 @@ function Form() {
                 />
 
                 <Box sx={{float: "right"}}>
-                    <Button type="reset" sx={{mr: 1}}>
+                    <Button type="button" onClick={()=>{navigate("/");}} sx={{mr: 1}}>
                         Cancel
                     </Button>
                     <Button type="submit" variant="contained">
