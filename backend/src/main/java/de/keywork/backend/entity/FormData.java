@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -27,6 +30,12 @@ public class FormData {
     private String phone;
     private String favouriteAnimal;
     private String zodiac;
+
+    @OneToOne(mappedBy = "formData")
+    private User user;
+
+    @OneToMany(mappedBy = "formData")
+    private List<JackpotHistory> jackpotHistorys = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

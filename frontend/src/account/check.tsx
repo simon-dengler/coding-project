@@ -27,6 +27,9 @@ export default function Check() {
                         state: {from:fromBefore}
                     });
                 }
+            })
+            .catch(error => {
+                console.error(error);
             });
         };
 

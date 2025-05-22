@@ -33,7 +33,7 @@ if (rootElement) {
                             <Route path="/form" element={<Form/>}/>
                             <Route path="/form/:formId" element={<Form/>}/>
                             <Route path="/game/:formId" element={<Game/>}/>
-                            <Route path="/result/:formId" element={<Result/>}/>
+                            <Route path="/result/:jackpotId" element={<Result/>}/>
                             <Route path="/account" element={<Account/>}/>
                         </Route>
                     </Route>

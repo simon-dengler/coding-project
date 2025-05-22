@@ -45,10 +45,10 @@ class BaseApi {
             ? Promise.reject(response)
             : response.json()
         ).catch(error => {
-            error.json().then((data: ErrorData) => {
+            /*error.json().then((data: ErrorData) => {
                 console.error(data);
                 alert(data.error + ": " + data.message);
-            });
+            });*/
             return Promise.reject(error);
         });
     }

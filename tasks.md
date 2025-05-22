@@ -22,18 +22,27 @@ Do as many tasks as possible from the following list
 * Navigation is bad - add a back to start link on all pages  
 --> Home Button in Header
 * Why can I enter my name in the phone input? - Restrict the input to only allow E.164 phone numbers  
--->
-* The text "Game" might not be a game - create a game the user has to win to get to the price
+--> done
+* The text "Game" might not be a game - create a game the user has to win to get to the price  
+--> Done
 * We need to proudly present our company - add a header banner with our company logo and a link to our website  
 --> Done
 * Who implemented that ugly UI? - make it beautiful  
---> Added Footer
+--> Added Header & Footer
 
 
 # Backend
-* To get more people to use our app we need a good jackpot - add an entity + table for the price and fill it with different jackpots during the next startup
-* Fetch a random Jackpot
-* Something is wrong with the JackpotHistory - save formdata and a reference to the jackpot entity in the database
-* Be gone hackers! - Verify in the backend if the user is allowed to get a jackpot
-* The user can just fill any game in the frontend and the result is lost - add the full mvc for the game inputs
-* What is currently broken and what is working? - Implement some junit tests
+* To get more people to use our app we need a good jackpot - add an entity + table for the price and fill it with different jackpots during the next startup  
+--> Done
+* Fetch a random Jackpot  
+--> Done
+* (Added by Simon:) Save Game Result in DB  
+--> Done
+* Something is wrong with the JackpotHistory - save formdata and a reference to the jackpot entity in the database  
+--> Done
+* Be gone hackers! - Verify in the backend if the user is allowed to get a jackpot  
+--> Done
+* The user can just fill any game in the frontend and the result is lost - add the full mvc for the game inputs  
+--> Done
+* What is currently broken and what is working? - Implement some junit tests  
+--> **TBD**

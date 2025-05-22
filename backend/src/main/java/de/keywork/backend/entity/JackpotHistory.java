@@ -21,10 +21,15 @@ public class JackpotHistory {
     private long id;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "form_data_id", unique = false)
     private FormData formData;
 
-    @Column(nullable = false)
-    private String jackpot;
+    @OneToOne
+    @JoinColumn(name = "result_id", unique = true)
+    private Result result;
+    @OneToOne
+    @JoinColumn(name = "jackpot_id", unique = true)
+    private Jackpot jackpot;
 
     @Override
     public boolean equals(Object o) {

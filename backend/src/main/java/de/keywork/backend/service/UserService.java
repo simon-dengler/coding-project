@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -46,6 +47,15 @@ public class UserService implements UserDetailsService {
             dto.setFormDataId(user.getFormData().getId());
         }
         return dto;
+    }
+
+    public User findUserByFormDataId(long formDataId) throws ResponseStatusException{
+        var optUser = userRepository.findByFormDataId(formDataId);
+        if(optUser.isPresent()) {
+            return optUser.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public long saveUser(UserDto userDto){
