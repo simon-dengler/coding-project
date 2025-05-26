@@ -46,13 +46,13 @@ function Game() {
             .then(id => {
                 setJackpodId(String(id));
             })
-            .catch(error => {
-                console.error(error);
+            .catch(errorData => {
+                console.error(errorData.error);
             });
         } else {
             baseApi.postData("result/"+formId, result)
             .catch(e => {
-                console.error(e);
+                console.error(e.error);
             });
         }
     };

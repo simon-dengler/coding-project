@@ -1,21 +1,23 @@
 package de.keywork.backend.util;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@RequiredArgsConstructor
+/**
+ * Provides unit tests for the {@link JwtUtil} class.
+ */
 public class JwtUtilTest {
-    private final JwtUtil jwtUtil;
+
+    @Autowired
+    private final JwtUtil jwtUtil = new JwtUtil("testSecret123#wem497tk3x57txh32f34872xfm3784xh");
 
     @ParameterizedTest
     @CsvSource({
-            "'simon'",
-            "'jonasbär123'"
+            "'Simon'",
+            "'Max'"
     })
     void jwtUtilTest(String input){
         String token = jwtUtil.generateToken(input);

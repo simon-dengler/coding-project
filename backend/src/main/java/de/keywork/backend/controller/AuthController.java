@@ -18,6 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Povides REST endpoints for sign-up and log-in functionality, that do not require a valid token (logged-in user).
+ */
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -26,8 +29,13 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authManager;
 
+    /**
+     * Checks, if a username is already taken or available.
+     * @param userDto contains the username
+     * @return Map with key "exists" and value of type bool, or http error code.
+     */
     @PostMapping("/check")
-    public ResponseEntity<?> checkUser(@RequestBody UserDto userDto){
+    public ResponseEntity<?> checkUsername(@RequestBody UserDto userDto){
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         if (userDto == null || userDto.getUsername() == null) {
             return ResponseEntity.badRequest().body("No User provided.");
@@ -44,6 +52,11 @@ public class AuthController {
         return ResponseEntity.internalServerError().body("Internal Error occured.");
     }
 
+    /**
+     * Creates new user and stores it in the DB.
+     * @param userDto user to be created
+     * @return valid JWT for the user or http error code
+     */
     @PostMapping("/register")
     public ResponseEntity<?> saveUser(@RequestBody UserDto userDto){
         long id;
@@ -61,6 +74,11 @@ public class AuthController {
         return ResponseEntity.internalServerError().build();
     }
 
+    /**
+     * Enpoint for login
+     * @param userDto dto with username and password
+     * @return valid JWT or http error code
+     */
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody UserDto userDto) {
         authManager.authenticate(

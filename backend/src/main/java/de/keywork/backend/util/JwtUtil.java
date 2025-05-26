@@ -12,13 +12,23 @@ import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * Creates and validates Jason Web Tokens (JWTs).
+ */
 @Component
 public class JwtUtil {
 
-    @Value("${app.jwt.secret}")
-    private String SECRET;
+    private final String SECRET;
+    // for testability
+    public JwtUtil(@Value("${app.jwt.secret}") String secret){
+        this.SECRET = secret;
+    }
 
-
+    /**
+     * Creates JWT with expiration date for username.
+     * @param username
+     * @return
+     */
     public String generateToken(String username) {
         Key key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
@@ -28,6 +38,11 @@ public class JwtUtil {
                 .compact();
     }
 
+    /**
+     * Validates a JWT with the secret and returns the contained username (if valid).
+     * @param token
+     * @return
+     */
     public String validateAndExtractUsername(String token) {
         SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
         try {
@@ -42,7 +57,13 @@ public class JwtUtil {
         }
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    /**
+     * Validates a JWT regarding matching username data and expiration date.
+     * @param token
+     * @param userDetails
+     * @return
+     */
+    public boolean isValidToken(String token, UserDetails userDetails) {
         SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
         try {
             Claims claims = (Claims) Jwts.parser()

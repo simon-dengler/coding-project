@@ -16,7 +16,10 @@ function Result() {
 
     useEffect(() => {
         baseApi.getData("result/" + jackpotIdNumber)
-        .then(responseData => setResultData(responseData as ResultDto));
+        .then(responseData => setResultData(responseData as ResultDto))
+        .catch(error => {
+            console.error(error.message);
+        });
     }, [jackpotIdNumber]);
     return (
         <Container maxWidth="sm">

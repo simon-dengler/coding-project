@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {Navigate, Outlet, useLocation, useNavigate,} from "react-router-dom";
+import {Outlet, useLocation, useNavigate,} from "react-router-dom";
 import baseApi from "../api/baseApi";
 
 export default function RouteProtection(){
@@ -13,8 +13,8 @@ export default function RouteProtection(){
                 const response = data as {username: string};
                 localStorage.setItem("username", response.username);
             })
-            .catch(error => {
-                console.log(error);
+            .catch(errorData => {
+                console.log(errorData.error);
                 localStorage.removeItem("jwt");
                 navigate("/check", {
                     replace: true,

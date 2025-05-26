@@ -14,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Provides endpoints to save {@link de.keywork.backend.entity.Result} entities and fetch a {@link Jackpot}.
+ */
 @RestController
 @RequiredArgsConstructor
 public class ResultController {
@@ -24,6 +27,13 @@ public class ResultController {
     private final FormDataService formDataService;
     private final UserService userService;
 
+    /**
+     * Coverts the {@link ResultDto} to a {@link de.keywork.backend.entity.Result} and stores it in the DB.
+     * If the result was correct, a jackpot history id will be returned, that qualifies the user for winning a certain jackpot.
+     * @param formId id of the form, that the user filled, before answering a question
+     * @param resultDto result of the quiz
+     * @return http-ok if wrong, id of a random jackpot if correct, or http error code
+     */
     @PostMapping("/result/{formId}")
     public ResponseEntity<?> saveResult(@PathVariable long formId,
                                               @RequestBody ResultDto resultDto) {
@@ -43,6 +53,12 @@ public class ResultController {
         }
     }
 
+    /**
+     * Fetches a jackpot by jackpot history id, if the current user qualified for it.
+     * @param jackpotHistoryId id of a {@link de.keywork.backend.entity.JackpotHistory} object
+     * @param authorization JWT of the user, to validate the jackpot history
+     * @return {@link JackpotDto} for the given {@link de.keywork.backend.entity.JackpotHistory} if it belongs to the current user, or http error code
+     */
     @GetMapping("/result/{jackpotHistoryId}")
     public ResponseEntity<?> fetchJackpot(@PathVariable long jackpotHistoryId,
                                           @RequestHeader("Authorization") String authorization){
@@ -58,7 +74,7 @@ public class ResultController {
                 jackpotDto.setDescription(jackpot.getDescription());
                 return ResponseEntity.ok(jackpotDto);
             }
-            return ResponseEntity.badRequest().body("Jackpot not fount for User.");
+            return ResponseEntity.badRequest().body("Jackpot not fount for User " + username);
         } catch (ResponseStatusException exception) {
             return ResponseEntity.status(exception.getStatusCode()).body(exception.getMessage());
         }

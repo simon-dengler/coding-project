@@ -16,6 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Service that provides write and read functionality for {@link Result} objects.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,6 +27,11 @@ public class ResultService {
     private final ResultRepository resultRepository;
     private final FormDataService formDataService;
 
+    /**
+     * Convert a {@link ResultDto} to a {@link Result} object and store it in the DB.
+     * @param dto
+     * @return id of the created object
+     */
     public long saveResult(ResultDto dto){
         Result result = new Result();
         result.setCategory(dto.getCategory());
@@ -35,6 +43,11 @@ public class ResultService {
         return resultRepository.save(result).getId();
     }
 
+    /**
+     * Fetches a random jackpot from the DB, as long as one is present there.
+     * @return random {@link Jackpot}
+     * @throws NoSuchElementException if DB is empty or jackpot with random id is missing
+     */
     public JackpotDto getRandomJackpot() throws NoSuchElementException {
         long min = 1;
         long max = jackpotRepository.findMaxId().orElseThrow(() -> new NoSuchElementException("Table is possibly empty."));
@@ -47,7 +60,13 @@ public class ResultService {
         return dto;
     }
 
-    public Result requireById(long id) {
-        return resultRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Result with this id not found."));
+    /**
+     * Fetches {@link Result} by id.
+     * @param id
+     * @return {@link Result} object
+     * @throws ResponseStatusException if object with id is not present
+     */
+    public Result requireById(long id) throws ResponseStatusException{
+        return resultRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Result with this id not found."));
     }
 }

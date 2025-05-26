@@ -28,8 +28,8 @@ export default function Check() {
                     });
                 }
             })
-            .catch(error => {
-                console.error(error);
+            .catch(errorData => {
+                console.error(errorData.error);
             });
         };
 

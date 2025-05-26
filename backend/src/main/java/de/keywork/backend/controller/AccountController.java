@@ -8,12 +8,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Provides functionality for account management.
+ * Endpoints are secured by JWT-Filter.
+ */
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
+    /**
+     * Loads data for a user by valid JWT
+     * @param authorization valid JWT
+     * @return User data as {@link UserDto} or HTTP Status Error
+     */
     @GetMapping("/account")
     public ResponseEntity<?> getAccount(@RequestHeader("Authorization") String authorization){
         if(authorization != null
@@ -23,6 +32,9 @@ public class AccountController {
                 var dto = new UserDto();
                 var username = jwtUtil.validateAndExtractUsername(token);
                 dto = userService.loadUserByUsername(username, dto);
+                if(dto.getUsername() == null){
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found.");
+                }
                 return ResponseEntity.ok(dto);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Token");

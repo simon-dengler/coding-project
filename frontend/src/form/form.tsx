@@ -22,8 +22,8 @@ interface User {
 
 export interface ErrorData {
     error: string;
-    status: number;
-    message: string;
+    status?: number;
+    message?: string;
     trace?: string;
 }
 
@@ -49,7 +49,12 @@ function Form() {
     useEffect(() => {
         if (formIdNumber) {
             baseApi.getData("form/" + formIdNumber)
-                .then(responseData => setFormData(responseData as FormData));
+                .then(responseData => setFormData(responseData as FormData))
+                .catch(error => {
+                    const errorData = error as ErrorData;
+                    console.error(`${errorData.error}: Received HTTP ${errorData.status}: ${errorData.message}`);
+                    navigate("/");
+                });
         } else {
             baseApi.getData("account")
             .then(responesData => {
@@ -59,7 +64,8 @@ function Form() {
                 }
             })
             .catch(error => {
-                console.error(error);
+                const errorData = error as ErrorData;
+                console.error(`${errorData.error}: Received HTTP ${errorData.status}: ${errorData.message}`);
             });
         }
     }, [formIdNumber]);
@@ -69,6 +75,9 @@ function Form() {
         baseApi.postData("form", formData).then(id => {
             navigate("/form/" + id); // ?? 
             navigate("/game/" + id);
+        })
+        .catch(errorData => {
+            console.error(errorData.error);
         });
     };
 

@@ -14,7 +14,7 @@ Do as many tasks as possible from the following list
 * Filling in the same data over and over again is annoying - prefill some of the form from the login data  
 --> done
 * Who wrote that code? - Improve the code quality  
---> **TBD**
+--> Added comments and tests
 
 # Frontend
 * The cancel button does not do anything - implement it  
@@ -45,4 +45,4 @@ Do as many tasks as possible from the following list
 * The user can just fill any game in the frontend and the result is lost - add the full mvc for the game inputs  
 --> Done
 * What is currently broken and what is working? - Implement some junit tests  
---> **TBD**
+--> done

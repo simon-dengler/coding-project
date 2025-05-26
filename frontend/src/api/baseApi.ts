@@ -22,15 +22,18 @@ class BaseApi {
         return fetch(url, {
             method: 'GET',
             headers: headers
-        }).then(response => !response.ok
-            ? Promise.reject(response)
-            : response.json()
-        ).catch(error => {
-            /*error.json().then((data: ErrorData) => {
-                console.error(data);
-                alert(data.error + ": " + data.message);
-            });*/
-            console.error(error);
+        }).then(async response => {
+            const contentType = response.headers.get("Content-Type") || "";
+            if(!response.ok) {
+                if (contentType.includes("application/json")) {
+                    const errorData: ErrorData = await response.json();
+                    return await Promise.reject(errorData);
+                } else {
+                    const errorText: string = await response.text();
+                    return Promise.reject({error: errorText, message: errorText});
+                }     
+            }
+            return response.json();
         });
     }
 
@@ -41,15 +44,18 @@ class BaseApi {
             method: 'POST',
             body: JSON.stringify(data),
             headers: headers
-        }).then(response => !response.ok
-            ? Promise.reject(response)
-            : response.json()
-        ).catch(error => {
-            /*error.json().then((data: ErrorData) => {
-                console.error(data);
-                alert(data.error + ": " + data.message);
-            });*/
-            return Promise.reject(error);
+        }).then(async response => {
+            const contentType = response.headers.get("Content-Type") || "";
+            if(!response.ok) {
+                if (contentType.includes("application/json")) {
+                    const errorData: ErrorData = await response.json();
+                    return await Promise.reject(errorData);
+                } else {
+                    const errorText: string = await response.text();
+                    return Promise.reject({error: errorText, message: errorText});
+                }     
+            }
+            return response.json();
         });
     }
 }
