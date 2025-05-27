@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 /**
  * Provides Unit test for the {@link AccountController} Class.
  */
+// in order to make testCases() non-static (to call JwtUtil methods)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(AccountController.class)
 @Import(JwtUtilTestConfiguration.class)
@@ -64,33 +65,32 @@ class AccountControllerTest {
      * Provides test logic for the "/account" endpoint. Parameters are provided as argument stream.
      * @param authorizationHeader
      * @param httpStatus
-     * @param userDto
+     * @param expectedUserDto
      * @throws Exception
      */
     @WithMockUser(username = "Simon")
     @ParameterizedTest
     @MethodSource("testCases")
-    public void getAccount_returnsUser_whenValidTokenAndLoggedIn(String authorizationHeader, HttpStatus httpStatus, UserDto userDto) throws Exception{
+    public void getAccount_returnsUser_whenValidTokenAndLoggedIn(String authorizationHeader, HttpStatus httpStatus, UserDto expectedUserDto) throws Exception{
         // Arrange
         var userDtoSimon = new UserDto();
         userDtoSimon.setUsername("Simon");
         when(userService.loadUserByUsername("Simon", new UserDto())).thenReturn(userDtoSimon);
 
         // Act
-        // sut = System under Test
-        MockHttpServletResponse sut = mockMvc.perform(get("/account")
+        MockHttpServletResponse response = mockMvc.perform(get("/account")
                         .header("Authorization", authorizationHeader)).andReturn().getResponse();
-        UserDto sutUserDto;
+        UserDto actualUserDto;
         try {
-            sutUserDto = objectMapper.readValue(sut.getContentAsString(), UserDto.class);
+            actualUserDto = objectMapper.readValue(response.getContentAsString(), UserDto.class);
         } catch (Exception e){
-            sutUserDto = null;
+            actualUserDto = null;
         }
 
         // Assert
-        assertEquals(httpStatus.value(), sut.getStatus());
-        if(sut.getStatus() == HttpStatus.OK.value()){
-            assertEquals(userDto.getUsername(), sutUserDto.getUsername());
+        assertEquals(httpStatus.value(), response.getStatus());
+        if(response.getStatus() == HttpStatus.OK.value()){
+            assertEquals(expectedUserDto.getUsername(), actualUserDto.getUsername());
         }
     }
 }

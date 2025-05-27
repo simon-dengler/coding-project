@@ -51,14 +51,16 @@ public class UserService implements UserDetailsService {
      * @return UserDto Object with username, id and formDataId
      */
     public UserDto loadUserByUsername(String username, UserDto dto) {
-        User user = userRepository.getUserByUsername(username)
+        return userRepository.getUserByUsername(username)
+                .map(user -> {
+                    dto.setUsername(user.getUsername());
+                    dto.setId(user.getId());
+                    if(user.getFormData() != null) {
+                        dto.setFormDataId(user.getFormData().getId());
+                    }
+                    return dto;
+                })
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        dto.setUsername(user.getUsername());
-        dto.setId(user.getId());
-        if(user.getFormData() != null) {
-            dto.setFormDataId(user.getFormData().getId());
-        }
-        return dto;
     }
 
     /**
